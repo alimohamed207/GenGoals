@@ -11,7 +11,7 @@ import 'firebase_options.dart';
 
 late SharedPreferences prefs;
 void main() async {
-// Initialize shared preferences
+// v3
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
