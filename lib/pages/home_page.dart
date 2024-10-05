@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_samples/components/colors.dart';
-import 'package:flutter_samples/dummy/task_list_view.dart';
 import 'package:flutter_samples/map/page/map_page.dart';
 import 'package:flutter_samples/models/courses_card_model.dart';
 import 'package:flutter_samples/pages/library/articles_list_page.dart';
