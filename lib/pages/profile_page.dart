@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_samples/components/colors.dart';
-import 'package:flutter_samples/dummy/task_list_view.dart';
+import 'package:flutter_samples/components/task_list_view.dart';
 import 'package:flutter_samples/pages/settings_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fl_chart/fl_chart.dart';
