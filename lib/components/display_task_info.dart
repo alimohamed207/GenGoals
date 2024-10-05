@@ -41,7 +41,7 @@ class DisplayTaskInfo extends StatelessWidget {
                     imageUrl: imageUrl,
                     progressIndicatorBuilder:
                         (context, url, downloadProgress) => const SpinKitPulse(
-                      color: Color.fromARGB(255, 90, 146, 184),
+                      color: AppColors.primaryColor,
                       size: 30,
                     ),
                     errorWidget: (context, url, error) =>

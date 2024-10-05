@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_samples/pages/courses/course_info.dart';
 import 'package:icons_plus/icons_plus.dart';
 
+// ignore: must_be_immutable
 class CourseCard extends StatelessWidget {
   final String title;
   final String info;
