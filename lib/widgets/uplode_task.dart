@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_samples/components/colors.dart';
+import 'package:flutter_samples/helper/user_data_help.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UplodeTask extends StatefulWidget {
@@ -18,6 +19,37 @@ class UplodeTask extends StatefulWidget {
 class _UplodeTaskState extends State<UplodeTask> {
   String _image = '';
   String _text = '';
+  int _points = 0;
+  int _tasks = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUserPoints();
+  }
+
+  Future<void> fetchUserPoints() async {
+    final firestore = FirebaseFirestore.instance;
+    final user = FirebaseAuth.instance.currentUser;
+
+    if (user == null) {
+      // Handle user not being logged in
+      return;
+    }
+
+    final userDocRef = firestore.collection('users').doc(user.uid);
+    final userSnapshot = await userDocRef.get();
+
+    if (userSnapshot.exists) {
+      final userData = userSnapshot.data() as Map<String, dynamic>;
+      if (mounted) {
+        setState(() {
+          _points = userData['points'];
+          _tasks = userData['tasks'];
+        });
+      }
+    }
+  }
 
   Future<String> uploadImage() async {
     final picker = ImagePicker();
@@ -61,9 +93,9 @@ class _UplodeTaskState extends State<UplodeTask> {
     try {
       String imageUrl = await uploadImage();
       await saveTask(imageUrl, text);
-      print('Task uploaded successfully');
+      throw ('Task uploaded successfully');
     } catch (e) {
-      print('Failed to upload task: $e');
+      throw ('Failed to upload task: $e');
     }
   }
 
@@ -160,41 +192,51 @@ class _UplodeTaskState extends State<UplodeTask> {
                 ),
               ],
             ),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(70),
-                color: widget.mainColor ?? AppColors.accentColor,
-              ),
-              child: Row(
-                children: [
-                  const Expanded(
-                    child: Text(
-                      "Done",
-                      style: TextStyle(color: Colors.white, fontSize: 18),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  Container(
-                      child: IconButton(
-                    onPressed: () {
-                      saveTask(_image, _text);
-                      Navigator.popUntil(context, ModalRoute.withName("/"));
-                    },
-                    padding: const EdgeInsets.all(0),
-                    iconSize: 32,
-                    icon: Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(50)),
-                      child: Icon(
-                        Icons.arrow_forward,
-                        color: widget.mainColor ?? AppColors.accentColor,
+            GestureDetector(
+              onTap: () {
+                saveTask(_image, _text);
+                updatePoints(
+                    FirebaseAuth.instance.currentUser!.uid, _points + 10);
+                updateStatistics(
+                  userId: FirebaseAuth.instance.currentUser!.uid,
+                  changedData: 'tasks',
+                  newValue: _tasks + 1,
+                );
+
+                Navigator.popUntil(context, ModalRoute.withName("/"));
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(70),
+                  color: widget.mainColor ?? AppColors.accentColor,
+                ),
+                child: Row(
+                  children: [
+                    const Expanded(
+                      child: Text(
+                        "Done",
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                        textAlign: TextAlign.center,
                       ),
                     ),
-                  )),
-                ],
+                    IconButton(
+                      onPressed: () {},
+                      padding: const EdgeInsets.all(0),
+                      iconSize: 32,
+                      icon: Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(50)),
+                        child: Icon(
+                          Icons.arrow_forward,
+                          color: widget.mainColor ?? AppColors.accentColor,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             )
           ],

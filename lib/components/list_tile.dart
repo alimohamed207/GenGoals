@@ -44,18 +44,15 @@ class ListViewTile extends StatelessWidget {
               height: 400,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12),
-                child: FadeInUp(
-                  delay: const Duration(milliseconds: 400),
-                  duration: const Duration(milliseconds: 500),
+                child: FadeInDown(
+                  delay: const Duration(milliseconds: 500),
+                  duration: const Duration(milliseconds: 600),
                   child: CachedNetworkImage(
-                    cacheManager: customeCacheManager,
-                    key: UniqueKey(),
                     imageUrl: object.imageUrl,
-                    fit: BoxFit.fitWidth,
                     progressIndicatorBuilder:
                         (context, url, downloadProgress) => const SpinKitPulse(
                       color: AppColors.primaryColor,
-                      size: 25,
+                      size: 30,
                     ),
                     errorWidget: (context, url, error) =>
                         const Icon(Icons.error),
