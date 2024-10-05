@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:flutter_samples/helper/open_url.dart';
 import 'package:flutter_samples/widgets/summary.dart';
 import 'package:flutter_samples/widgets/quiz_questions.dart';
 import 'package:flutter_samples/widgets/uplode_task.dart';
@@ -277,14 +278,15 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                 ),
               ),
               IconButton(
-                onPressed: () => {
+                onPressed: () {
                   // Navigator.pushNamed(context, "/profile")
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (BuildContext context) => QuizQuestions(
-                                mainColor: widget.mainColor,
-                              )))
+                  if (widget.title == 'Ozone layer') {
+                    openBrowserWebView(
+                        ' https://quizizz.com/admin/quiz/6700d3969083b03c55da0fa9');
+                  } else {
+                    openBrowserWebView(
+                        '  https://quizizz.com/admin/quiz/6700d5f780ea165405967033');
+                  }
                 },
                 padding: EdgeInsets.all(0),
                 iconSize: 25,
