@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_samples/helper/open_url.dart';
+import 'package:flutter_samples/helper/web_view.dart';
 import 'package:flutter_samples/widgets/summary.dart';
 import 'package:flutter_samples/widgets/quiz_questions.dart';
 import 'package:flutter_samples/widgets/uplode_task.dart';
@@ -281,11 +282,13 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                 onPressed: () {
                   // Navigator.pushNamed(context, "/profile")
                   if (widget.title == 'Ozone layer') {
-                    openBrowserWebView(
-                        ' https://quizizz.com/admin/quiz/6700d3969083b03c55da0fa9');
+                    FlutterWebView(
+                        url:
+                            ' https://quizizz.com/admin/quiz/6700d3969083b03c55da0fa9');
                   } else {
-                    openBrowserWebView(
-                        '  https://quizizz.com/admin/quiz/6700d5f780ea165405967033');
+                    FlutterWebView(
+                        url:
+                            '  https://quizizz.com/admin/quiz/6700d5f780ea165405967033');
                   }
                 },
                 padding: EdgeInsets.all(0),
