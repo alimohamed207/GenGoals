@@ -34,8 +34,8 @@ For any questions or feedback, please contact:
 - **Greenovate Team**: Team At Nasa Space Apps Cairo
 - - **Lily Yasser Sayed**: Team Leader - UI/UX
 - **Ali Mohamed Eid**: Software Engineer - Flutter Development 
-- Email: aliskytop2007@gmail.com
-- **Felo**: Data - Game Development 
+-- Email: aliskytop2007@gmail.com
+- **Felopateer Rober Yaqout**: Data - Game Development 
 - **Yousif Ahmed**: Researcher
 - **Khalid Osam**: Video Editing 
 - **Eslam Emam**: Software Engineer
