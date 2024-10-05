@@ -8,10 +8,12 @@ class ChatCard extends StatelessWidget {
       required this.imagePath,
       required this.label,
       required this.text,
-      required this.onTap});
+      required this.onTap,
+      this.imageHeight});
   final String imagePath;
   final String label;
   final String text;
+  final double? imageHeight;
 
   final void Function() onTap;
   @override
@@ -28,7 +30,7 @@ class ChatCard extends StatelessWidget {
       child: Row(
         children: [
           // cute image
-          Lottie.asset(imagePath, height: 120),
+          Lottie.asset(imagePath, height: imageHeight ?? 120),
           const SizedBox(width: 30),
           // how do you feel + start chat button
           Expanded(

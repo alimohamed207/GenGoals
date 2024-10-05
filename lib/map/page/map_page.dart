@@ -8,14 +8,14 @@ class MapPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         backgroundColor: AppColors.primaryColor,
-        appBar: AppBar(title: const Text('dsad')),
+        appBar: AppBar(title: const Text('SDGs Around The World')),
         body: const LocationsWidget(),
       );
 
   Widget buildAppBar() => AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        title: const Text('INTERESTS'),
+        title: const Text('SDGs Around The World'),
         centerTitle: true,
         actions: [
           IconButton(

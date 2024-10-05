@@ -25,7 +25,7 @@ class _SettingsPageState extends State<SettingsPage> {
             child: Stack(
               children: [
                 SizedBox(
-                  height: 570,
+                  height: 400,
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(
                       16.0,
@@ -45,118 +45,9 @@ class _SettingsPageState extends State<SettingsPage> {
                           borderRadius: BorderRadius.circular(24)),
                       child: ListView(
                         children: [
-                          Center(
-                            child: Text(
-                              "James S. Hernandes",
-                              style: TextStyle(
-                                  fontSize: 26, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Center(
-                            child: Text("hernandex.redial@gmail.ac.in",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.normal)),
-                          ),
                           SizedBox(
-                            height: 12,
+                            height: 50,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    Icon(Icons.account_circle_sharp, size: 32),
-                                    SizedBox(
-                                      width: 14,
-                                    ),
-                                    Text(
-                                      "Profile",
-                                      style: TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.bold),
-                                    )
-                                  ],
-                                ),
-                                Icon(Icons.keyboard_arrow_right, size: 32)
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    Icon(Icons.language, size: 32),
-                                    SizedBox(
-                                      width: 14,
-                                    ),
-                                    Text(
-                                      "Language",
-                                      style: TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.bold),
-                                    )
-                                  ],
-                                ),
-                                Icon(Icons.keyboard_arrow_right, size: 32)
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    Icon(Icons.privacy_tip_outlined, size: 32),
-                                    SizedBox(
-                                      width: 14,
-                                    ),
-                                    Text(
-                                      "Terms & Conditions",
-                                      style: TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.bold),
-                                    )
-                                  ],
-                                ),
-                                Icon(Icons.keyboard_arrow_right, size: 32)
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    Icon(Icons.help_outline, size: 32),
-                                    SizedBox(
-                                      width: 14,
-                                    ),
-                                    Text(
-                                      "Help Center",
-                                      style: TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.bold),
-                                    )
-                                  ],
-                                ),
-                                Icon(Icons.keyboard_arrow_right, size: 32)
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 10),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: InkWell(
@@ -204,14 +95,9 @@ class _SettingsPageState extends State<SettingsPage> {
                     left: (MediaQuery.of(context).size.width / 2) - 48,
                     child: CircleAvatar(
                       radius: 48,
-                      backgroundColor: Colors.purple,
+                      backgroundColor: Color.fromARGB(255, 17, 29, 90),
                       child: Image.asset("assets/images/user.png"),
                     )),
-                Positioned(
-                  top: 157,
-                  left: (MediaQuery.of(context).size.width / 2) + 24,
-                  child: SvgPicture.asset("assets/images/Country.svg"),
-                ),
               ],
             ),
           ),

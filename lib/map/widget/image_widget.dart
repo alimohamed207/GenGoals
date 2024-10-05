@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_samples/components/colors.dart';
 import 'package:flutter_samples/map/data/hero_tag.dart';
 import 'package:flutter_samples/map/model/location.dart';
 import 'package:flutter_samples/map/widget/hero_widget.dart';
@@ -56,10 +57,22 @@ class ImageWidget extends StatelessWidget {
 
   Widget buildTopText() => Text(
         location.name,
-        style: const TextStyle(
-          color: Colors.white,
+        style: TextStyle(
+          color: AppColors.whiteColor,
+          fontSize: 40,
           fontWeight: FontWeight.bold,
-          fontSize: 20,
+          shadows: [
+            Shadow(
+              offset: const Offset(5.0, 5.0),
+              blurRadius: 10.0,
+              color: AppColors.primaryColor.withOpacity(0.5),
+            ),
+            Shadow(
+              offset: const Offset(-5.0, -5.0),
+              blurRadius: 10.0,
+              color: Colors.blue.withOpacity(0.5),
+            ),
+          ],
         ),
       );
 }

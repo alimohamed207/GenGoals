@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_samples/map/data/hero_tag.dart';
-import 'package:flutter_samples/map/data/locations.dart';
 import 'package:flutter_samples/map/model/location.dart';
 import 'package:flutter_samples/map/widget/hero_widget.dart';
-import 'package:flutter_samples/map/widget/stars_widget.dart';
 
 class ExpandedContentWidget extends StatelessWidget {
   final Location location;

@@ -10,8 +10,11 @@ class CoursesCardModel {
   final Color darkColor;
   final String taskDescription;
   final BoxIconData icon;
+  final String sumImage;
+  final String? videoUrl;
 
   CoursesCardModel({
+    this.videoUrl,
     required this.title,
     required this.info,
     required this.bgPath,
@@ -19,5 +22,6 @@ class CoursesCardModel {
     required this.darkColor,
     required this.taskDescription,
     required this.icon,
+    required this.sumImage,
   });
 }

@@ -55,7 +55,7 @@ class ChatPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: ChatCard(
-                imagePath: 'assets/animation/community.json',
+                imagePath: 'assets/animation/instructor.json',
                 label: 'Instructor',
                 text: 'Your personal SDG learning assistant.',
                 onTap: () {
@@ -74,7 +74,8 @@ class ChatPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: ChatCard(
-                imagePath: 'assets/animation/community.json',
+                imagePath: 'assets/animation/group.json',
+                imageHeight: 90,
                 label: 'SDGs Community',
                 text: 'Connect, chat, and engage with like-minded people.',
                 onTap: () {

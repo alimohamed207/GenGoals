@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:flutter_samples/widgets/Summary.dart';
+import 'package:flutter_samples/widgets/summary.dart';
 import 'package:flutter_samples/widgets/quiz_questions.dart';
 import 'package:flutter_samples/widgets/uplode_task.dart';
 import 'package:flutter_samples/widgets/video_player.dart';
@@ -15,13 +15,17 @@ class CourseInfoPage extends StatefulWidget {
       required this.taskDescription,
       required this.title,
       required this.about,
-      required this.icon});
+      required this.icon,
+      required this.sumImage,
+      this.videoUrl});
   final Color mainColor;
   final Color darkColor;
   final String taskDescription;
   final String title;
   final String about;
   final BoxIconData icon;
+  final String sumImage;
+  final String? videoUrl;
   @override
   State<CourseInfoPage> createState() => _CourseInfoPageState();
 }
@@ -124,6 +128,7 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                                     MaterialPageRoute(
                                       builder: (context) => SummaryPage(
                                         mainColor: widget.mainColor,
+                                        sumImage: widget.sumImage,
                                       ),
                                     ),
                                   );
@@ -243,8 +248,8 @@ class _CourseInfoPageState extends State<CourseInfoPage> {
                           builder: (context) => CustomVideoPlayer(
                               title: widget.title,
                               description: widget.about,
-                              videoUrl:
-                                  'https://youtu.be/nratgpsmLME?si=VDikV_GqMkPJdtFD'),
+                              videoUrl: widget.videoUrl ??
+                                  'https://www.youtube.com/watch?v=58F6Kmx_yfg'),
                         ),
                       );
                     },

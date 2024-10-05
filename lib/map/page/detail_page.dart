@@ -4,7 +4,6 @@ import 'package:flutter_samples/map/model/location.dart';
 import 'package:flutter_samples/map/widget/detailed_info_widget.dart';
 import 'package:flutter_samples/map/widget/hero_widget.dart';
 import 'package:flutter_samples/map/widget/lat_long_widget.dart';
-import 'package:flutter_samples/map/widget/reviews_widget.dart';
 
 class DetailPage extends StatelessWidget {
   final Location location;
@@ -20,7 +19,7 @@ class DetailPage extends StatelessWidget {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
-          title: const Text('INTERESTS'),
+          title: const Text('More About It'),
           centerTitle: true,
           actions: [
             IconButton(
@@ -55,7 +54,7 @@ class DetailPage extends StatelessWidget {
               DetailedInfoWidget(location: location),
               const Expanded(
                 flex: 5,
-                child: Text('sdaddaddada'),
+                child: Text(''),
               ),
             ],
           ),

@@ -18,7 +18,7 @@ class StatsCard extends StatefulWidget {
 
 class _StatsCardState extends State<StatsCard> {
   String? points;
-  String? lessons;
+  String? videoWatched;
   String? tasks;
   String? quizes;
   @override
@@ -42,7 +42,7 @@ class _StatsCardState extends State<StatsCard> {
             points = documentSnapshot.get('points').toString();
             quizes = documentSnapshot.get('quizPlayed').toString();
             tasks = documentSnapshot.get('tasks').toString();
-            lessons = documentSnapshot.get('videosWathsed').toString();
+            videoWatched = documentSnapshot.get('videosWathsed').toString();
           });
         }
       }
@@ -130,7 +130,7 @@ class _StatsCardState extends State<StatsCard> {
                   ),
                   const material.Spacer(),
                   const material.Text(
-                    "12 days Streak",
+                    "12 days Streak ",
                     style: material.TextStyle(
                         color: material.Color(0xFFADADAD),
                         fontFamily: 'Red Hat Display',
@@ -154,13 +154,15 @@ class _StatsCardState extends State<StatsCard> {
                   ),
                   const material.Spacer(),
                   material.Text(
-                    lessons != null ? "${lessons!} Lesson Done" : "Lesson Done",
+                    videoWatched != null
+                        ? "${videoWatched!} Video Watched "
+                        : "Video Watched",
                     style: const material.TextStyle(
                         color: material.Color(0xFFADADAD),
                         fontFamily: 'Red Hat Display',
                         fontSize: 10),
                   ),
-                  const material.Icon(BoxIcons.bx_book_open, size: 16),
+                  const material.Icon(BoxIcons.bx_video, size: 16),
                 ],
               ),
             ),

@@ -11,18 +11,23 @@ class CoursesPage extends StatelessWidget {
     CoursesCardModel(
       title: 'Ozone layer',
       info:
-          ' Ensure access to affordable, reliable,\nsustainable, and modern energy for all.',
+          'The ozone layer, located 15 to 35 kilometers above Earth, absorbs harmful UV rays, crucial for life. Damage from chlorofluorocarbons (CFCs) leads to health risks, ecosystem harm, and agricultural impacts. Protecting it involves choosing eco-friendly products, raising awareness, participating in cleanups, cycling to school, and engaging in science projects.',
       bgPath: 'assets/images/sdgs_images/7.png',
+      sumImage: 'assets/images/ozone_sum.jpeg',
+      videoUrl: 'https://www.youtube.com/watch?v=A8Y5YI20HUc',
       mainColor: const Color(0xFFfbc412),
-      darkColor: const Color.fromARGB(255, 158, 124, 11),
+      darkColor: const Color.fromARGB(255, 238, 203, 90),
       icon: BoxIcons.bx_sun,
       taskDescription:
           'Mission: Plant trees or start a garden at your school to promote climate action and reduce carbon emissions.\nAffording more pots and seeds for people that will do the activity',
     ),
     CoursesCardModel(
       title: 'Population Growth',
-      info: 'End extreme poverty\nand hunger.',
+      info:
+          'Overpopulation leads to\ncrowded cities and strains\nresources.It’s caused by factors like high birth rates, gender preference, lack of education, and migration. To solve this, we can raise awareness, support local projects, adopt eco-friendly habits, promote education on family planning, and advocate for gender equality in our communities.',
       bgPath: 'assets/images/sdgs_images/1.png',
+      videoUrl: 'https://www.youtube.com/watch?v=58F6Kmx_yfg',
+      sumImage: 'assets/images/overpopluation_sum.jpeg',
       mainColor: const Color(0xFFe5233d),
       darkColor: const Color.fromARGB(255, 131, 20, 35),
       icon: BoxIcons.bx_group,
@@ -31,8 +36,10 @@ class CoursesPage extends StatelessWidget {
     ),
     CoursesCardModel(
       title: 'Sustainable fisheries or\nWater filtration.',
-      info: 'Ensure access to clean water\nand sanitation for all.',
+      info:
+          'Water pollution poses significant threats to health, ecosystems, and economies. Common sources include industrial waste, agricultural runoff, untreated sewage, microplastics, oil spills, and deforestation. Contaminated water can cause serious illnesses, harm marine life, and contribute to water scarcity. Promoting clean water access, using filtration systems, and raising awareness are vital actions for facing this issue.',
       bgPath: 'assets/images/sdgs_images/6.png',
+      sumImage: 'assets/images/water_sum.jpeg',
       mainColor: const Color(0xFF27bfe6),
       darkColor: const Color.fromARGB(255, 21, 104, 124),
       taskDescription:
@@ -47,6 +54,7 @@ class CoursesPage extends StatelessWidget {
       mainColor: const Color(0xFF59ba47),
       darkColor: const Color.fromARGB(255, 45, 95, 37),
       taskDescription: '',
+      sumImage: 'assets/images/water_sum.jpeg',
       icon: BoxIcons.bx_sun,
     ),
     CoursesCardModel(
@@ -54,6 +62,7 @@ class CoursesPage extends StatelessWidget {
       info:
           'Build resilient infrastructure,\npromote inclusive and\nsustainable industrialization',
       bgPath: 'assets/images/sdgs_images/9.png',
+      sumImage: 'assets/images/water_sum.jpeg',
       mainColor: const Color(0xFFf26a2e),
       darkColor: const Color.fromARGB(255, 163, 71, 31),
       taskDescription: '',
@@ -95,6 +104,8 @@ class CoursesPage extends StatelessWidget {
                       darkColor: courses[index].darkColor,
                       taskDescription: courses[index].taskDescription,
                       icon: courses[index].icon,
+                      sumImage: courses[index].sumImage,
+                      videoUrl: courses[index].videoUrl,
                     ),
                   );
                 },

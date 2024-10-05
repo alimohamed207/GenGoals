@@ -1,5 +1,8 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_samples/components/colors.dart';
 import 'package:image_picker/image_picker.dart';
@@ -13,80 +16,54 @@ class UplodeTask extends StatefulWidget {
 }
 
 class _UplodeTaskState extends State<UplodeTask> {
-  File? _image;
-  // String _imageUrl = ''; // Initialize image URL to an empty string
-  // String _note = ''; // Initialize note to an empty string
+  String _image = '';
+  String _text = '';
 
-  // Future<void> _uploadImageToFirebase() async {
-  //   if (_image == null) {
-  //     // Handle case where no image is selected
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(
-  //         content: Text('Please select an image to upload.'),
-  //       ),
-  //     );
-  //     return;
-  //   }
-
-  //   try {
-  //     await Firebase.initializeApp(); // Initialize Firebase if not already done
-
-  //     final storage = FirebaseStorage.instance;
-  //     final reference = storage.ref().child('tasks/${DateTime.now().millisecondsSinceEpoch}.jpg'); // Create a unique path for the image
-  //     final uploadTask = reference.putFile(_image!);
-
-  //     setState(() {
-  //       // Update UI to show upload progress (optional)
-  //     });
-
-  //     final snapshot = await uploadTask;
-  //     _imageUrl = await snapshot.ref.getDownloadURL();
-  //   } on FirebaseException catch (e) {
-  //     // Handle Firebase errors
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(
-  //         content: Text('Error uploading image: ${e.message}'),
-  //       ),
-  //     );
-  //   }
-  // }
-
-  // Future<void> _saveToFirestore() async {
-  //   if (_imageUrl.isEmpty) {
-  //     // Handle case where image upload failed or no image was selected
-  //     return;
-  //   }
-
-  //   // Replace with your actual Firestore reference initialization
-  //   // final firestore = FirebaseFirestore.instance;
-  //   // final collection = firestore.collection('tasks');
-
-  //   // Assuming a collection named 'tasks' with fields 'imageUrl' and 'note'
-  //   // collection.add({'imageUrl': _imageUrl, 'note': _note});
-
-  //   // Show success message after saving (optional)
-  // }
-
-  // _pickimage(ImageSource source) async {
-  //   final picker = ImagePicker();
-  //   final pickedFile = await picker.pickImage(source: source);
-
-  //   if (pickedFile != null) {
-  //     setState(() {
-  //       _image = File(pickedFile.path);
-
-  //     });
-  //   }
-  // }
-
-  _pickimage(ImageSource source) async {
+  Future<String> uploadImage() async {
     final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: source);
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
-      setState(() {
-        _image = File(pickedFile.path);
+      File file = File(pickedFile.path);
+      String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+      Reference storageRef =
+          FirebaseStorage.instance.ref().child('images/$fileName');
+      UploadTask uploadTask = storageRef.putFile(file);
+      TaskSnapshot snapshot = await uploadTask;
+      String downloadUrl = await snapshot.ref.getDownloadURL();
+      return downloadUrl;
+    } else {
+      throw Exception('No image selected');
+    }
+  }
+
+//save new task in firebase
+  Future<void> saveTask(String imageUrl, String text) async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      CollectionReference userTasks = FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .collection('tasks');
+      await userTasks.add({
+        'imageUrl': imageUrl,
+        'text': text,
+        'task': widget.taskDescription,
+        'timestamp': FieldValue.serverTimestamp(),
       });
+    } else {
+      throw Exception('No user signed in');
+    }
+  }
+
+//uplode task
+  Future<void> uploadTask(String text) async {
+    try {
+      String imageUrl = await uploadImage();
+      await saveTask(imageUrl, text);
+      print('Task uploaded successfully');
+    } catch (e) {
+      print('Failed to upload task: $e');
     }
   }
 
@@ -123,8 +100,8 @@ class _UplodeTaskState extends State<UplodeTask> {
                     style:
                         TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
                 GestureDetector(
-                  onTap: () {
-                    _pickimage(ImageSource.gallery);
+                  onTap: () async {
+                    _image = await uploadImage();
                   },
                   child: Container(
                     padding: const EdgeInsets.all(32.0),
@@ -172,7 +149,7 @@ class _UplodeTaskState extends State<UplodeTask> {
                       ]),
                   child: TextField(
                     onChanged: (value) {
-                      print(value);
+                      _text = value;
                     },
                     minLines: 4,
                     maxLines: 4,
@@ -201,6 +178,7 @@ class _UplodeTaskState extends State<UplodeTask> {
                   Container(
                       child: IconButton(
                     onPressed: () {
+                      saveTask(_image, _text);
                       Navigator.popUntil(context, ModalRoute.withName("/"));
                     },
                     padding: const EdgeInsets.all(0),

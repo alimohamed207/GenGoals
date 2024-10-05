@@ -4,18 +4,24 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_samples/components/colors.dart';
+import 'package:flutter_samples/dummy/task_list_view.dart';
+import 'package:flutter_samples/pages/settings_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fl_chart/fl_chart.dart';
 
-class StatisticsPage extends StatefulWidget {
-  const StatisticsPage({super.key});
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
 
   @override
-  State<StatisticsPage> createState() => _StatisticsPageState();
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _StatisticsPageState extends State<StatisticsPage> {
+class _ProfilePageState extends State<ProfilePage> {
   int _points = 0;
+  String _username = '';
+  int _quizPlayed = 0;
+  int _tasks = 0;
+  int _videoWatched = 0;
   bool isBadgeOne = true;
   bool isBadgeTwo = true;
   bool isBadgeThree = true;
@@ -26,10 +32,10 @@ class _StatisticsPageState extends State<StatisticsPage> {
   @override
   void initState() {
     super.initState();
-    fetchUserPoints();
+    fetchUserData();
   }
 
-  Future<void> fetchUserPoints() async {
+  Future<void> fetchUserData() async {
     final firestore = FirebaseFirestore.instance;
     final user = FirebaseAuth.instance.currentUser;
 
@@ -45,6 +51,10 @@ class _StatisticsPageState extends State<StatisticsPage> {
       final userData = userSnapshot.data() as Map<String, dynamic>;
       setState(() {
         _points = userData['points'];
+        _username = userData['name'];
+        _quizPlayed = userData['quizPlayed'];
+        _tasks = userData['tasks'];
+        _videoWatched = userData['videosWathsed'];
       });
     }
     if (_points >= 50) {
@@ -82,7 +92,16 @@ class _StatisticsPageState extends State<StatisticsPage> {
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: IconButton(onPressed: () => {}, icon: Icon(Icons.settings)),
+            child: IconButton(
+                onPressed: () => {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SettingsPage(),
+                        ),
+                      )
+                    },
+                icon: Icon(Icons.settings)),
           ),
         ],
       ),
@@ -126,7 +145,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                               children: [
                                 Center(
                                     child: Text(
-                                  "Madelyn Dias",
+                                  _username,
                                   style: TextStyle(
                                       fontSize: 22,
                                       fontWeight: FontWeight.w700),
@@ -302,7 +321,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                                         Column(
                                           children: [
                                             Text(
-                                              "Details",
+                                              "Your Tasks",
                                               style: TextStyle(
                                                   color: dict["active"] == 2
                                                       ? Color(0xFF2BB6E0)
@@ -331,446 +350,348 @@ class _StatisticsPageState extends State<StatisticsPage> {
                                       height: 1000 - 370,
                                       child: PageView(
                                         onPageChanged: (value) {
-                                          print(value);
                                           dict["active"] = value.floor();
                                           setState(() {});
                                         },
                                         controller: controller,
                                         children: [
-                                          Container(
-                                            child: GridView.count(
-                                              crossAxisCount: 3,
-                                              children: [
-                                                Svglock(
-                                                    asset:
-                                                        "assets/images/Badge1.svg",
-                                                    locked: isBadgeOne),
-                                                Svglock(
-                                                    asset:
-                                                        "assets/images/Badge2.svg",
-                                                    locked: isBadgeTwo),
-                                                Svglock(
-                                                    asset:
-                                                        "assets/images/Badge3.svg",
-                                                    locked: isBadgeThree),
-                                                Svglock(
-                                                    asset:
-                                                        "assets/images/Badge4.svg",
-                                                    locked: isBadgeFour),
-                                                Svglock(
-                                                    asset:
-                                                        "assets/images/Badge5.svg",
-                                                    locked: isBadgeFive),
-                                                Svglock(
-                                                    asset:
-                                                        "assets/images/Badge6.svg",
-                                                    locked: isBadgeSix),
-                                              ],
-                                            ),
+                                          GridView.count(
+                                            crossAxisCount: 3,
+                                            children: [
+                                              Svglock(
+                                                  asset:
+                                                      "assets/images/Badge1.svg",
+                                                  locked: isBadgeOne),
+                                              Svglock(
+                                                  asset:
+                                                      "assets/images/Badge2.svg",
+                                                  locked: isBadgeTwo),
+                                              Svglock(
+                                                  asset:
+                                                      "assets/images/Badge3.svg",
+                                                  locked: isBadgeThree),
+                                              Svglock(
+                                                  asset:
+                                                      "assets/images/Badge4.svg",
+                                                  locked: isBadgeFour),
+                                              Svglock(
+                                                  asset:
+                                                      "assets/images/Badge5.svg",
+                                                  locked: isBadgeFive),
+                                              Svglock(
+                                                  asset:
+                                                      "assets/images/Badge6.svg",
+                                                  locked: isBadgeSix),
+                                            ],
                                           ),
-                                          Container(
-                                            child: ListView(
-                                              children: [
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                    color: Color(0xFFF5F9FF),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            16),
-                                                  ),
-                                                  padding: EdgeInsets.all(16),
-                                                  child: Column(
-                                                    children: [
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .end,
-                                                        children: [
-                                                          Container(
-                                                            padding: EdgeInsets
-                                                                .symmetric(
-                                                                    horizontal:
-                                                                        14,
-                                                                    vertical:
-                                                                        10),
-                                                            decoration: BoxDecoration(
-                                                                color: Colors
-                                                                    .white,
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            16),
-                                                                border:
-                                                                    Border.all(
-                                                                        color: Color(
-                                                                            0xFFEFEEFC),
-                                                                        width:
-                                                                            1.5)),
-                                                            child: Row(
-                                                              children: [
-                                                                Text("Monthly"),
-                                                                Icon(
-                                                                  Icons
-                                                                      .keyboard_arrow_down,
-                                                                  color: Color(
-                                                                      0xFF2BB6E0),
-                                                                )
-                                                              ],
-                                                            ),
-                                                          )
-                                                        ],
-                                                      ),
-                                                      SizedBox(
-                                                        height: 30,
-                                                      ),
-                                                      Text(
-                                                        "You have played a total\n24 quizzes this month!",
-                                                        style: TextStyle(
-                                                            fontSize: 24,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                      ),
-                                                      SizedBox(
-                                                        height: 22,
-                                                      ),
-                                                      Stack(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        children: [
-                                                          SizedBox(
-                                                            height: 138,
-                                                            width: 138,
-                                                            child:
-                                                                CircularProgressIndicator(
-                                                              strokeWidth: 10,
-                                                              value: 37 / 50,
-                                                              color: Color(
-                                                                  0xFF0E104B),
-                                                              backgroundColor:
-                                                                  Color(
-                                                                      0xFFFFFFFF),
-                                                              strokeCap:
-                                                                  StrokeCap
-                                                                      .round,
-                                                            ),
-                                                          ),
-                                                          Positioned(
-                                                            child: Column(
-                                                              children: [
-                                                                Text.rich(TextSpan(
-                                                                    children: [
-                                                                      TextSpan(
-                                                                          text:
-                                                                              "37",
-                                                                          style:
-                                                                              TextStyle(
-                                                                            color:
-                                                                                Color(0xFF0C092A),
-                                                                            fontSize:
-                                                                                32,
-                                                                            fontWeight:
-                                                                                FontWeight.bold,
-                                                                          )),
-                                                                      TextSpan(
-                                                                          text:
-                                                                              "/50",
-                                                                          style:
-                                                                              TextStyle(
-                                                                            color:
-                                                                                Color(0x80181254),
-                                                                            fontSize:
-                                                                                16,
-                                                                            fontWeight:
-                                                                                FontWeight.bold,
-                                                                          )),
-                                                                    ])),
-                                                                Text(
-                                                                    "quiz played",
-                                                                    style:
-                                                                        TextStyle(
-                                                                      color: Color(
-                                                                          0x800C092A),
-                                                                      fontSize:
-                                                                          16,
-                                                                    ))
-                                                              ],
-                                                            ),
-                                                          )
-                                                        ],
-                                                      ),
-                                                      SizedBox(
-                                                        height: 24,
-                                                      ),
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Container(
-                                                            width: 157.5,
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    16),
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color:
-                                                                  Colors.white,
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          16),
-                                                            ),
-                                                            child: Column(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .stretch,
-                                                              children: [
-                                                                Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .spaceBetween,
-                                                                  children: [
-                                                                    Padding(
-                                                                      padding: const EdgeInsets
-                                                                          .only(
-                                                                          top:
-                                                                              12.0),
-                                                                      child: Text(
-                                                                          "5",
-                                                                          style:
-                                                                              TextStyle(
-                                                                            color:
-                                                                                Color(0xFF0C092A),
-                                                                            fontSize:
-                                                                                32,
-                                                                            fontWeight:
-                                                                                FontWeight.bold,
-                                                                          )),
-                                                                    ),
-                                                                    Padding(
-                                                                      padding: const EdgeInsets
-                                                                          .only(
-                                                                          bottom:
-                                                                              10.0),
-                                                                      child: Icon(
-                                                                          Icons
-                                                                              .edit_outlined),
-                                                                    )
-                                                                  ],
-                                                                ),
-                                                                Text(
-                                                                    "Quiz Created",
-                                                                    style:
-                                                                        TextStyle(
-                                                                      color: Color(
-                                                                          0xFF0C092A),
-                                                                      fontSize:
-                                                                          16,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                    ))
-                                                              ],
-                                                            ),
-                                                          ),
-                                                          Container(
-                                                            width: 157.5,
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    16),
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: Color(
-                                                                  0xFF0E104B),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          16),
-                                                            ),
-                                                            child: Column(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .stretch,
-                                                              children: [
-                                                                Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .spaceBetween,
-                                                                  children: [
-                                                                    Padding(
-                                                                      padding: const EdgeInsets
-                                                                          .only(
-                                                                          top:
-                                                                              12.0),
-                                                                      child: Text(
-                                                                          "21",
-                                                                          style:
-                                                                              TextStyle(
-                                                                            color:
-                                                                                Colors.white,
-                                                                            fontSize:
-                                                                                32,
-                                                                            fontWeight:
-                                                                                FontWeight.bold,
-                                                                          )),
-                                                                    ),
-                                                                    Padding(
-                                                                      padding: const EdgeInsets
-                                                                          .only(
-                                                                          bottom:
-                                                                              10.0),
-                                                                      child:
-                                                                          Icon(
-                                                                        Icons
-                                                                            .military_tech_outlined,
-                                                                        color: Colors
-                                                                            .white,
-                                                                      ),
-                                                                    )
-                                                                  ],
-                                                                ),
-                                                                Text("Quiz Won",
-                                                                    style:
-                                                                        TextStyle(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontSize:
-                                                                          16,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                    ))
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      )
-                                                    ],
-                                                  ),
+                                          ListView(
+                                            children: [
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: Color(0xFFF5F9FF),
+                                                  borderRadius:
+                                                      BorderRadius.circular(16),
                                                 ),
-                                                SizedBox(
-                                                  height: 24,
-                                                ),
-                                                Container(
-                                                  decoration: BoxDecoration(
-                                                      color: Color(0xFF2BB6E0),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              16)),
-                                                  padding: EdgeInsets.all(16),
-                                                  child: Column(
-                                                    children: [
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text(
-                                                            "Top contribution to\nachieving SDGs",
-                                                            style: TextStyle(
-                                                                fontSize: 21,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .white),
-                                                          ),
-                                                          Container(
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    8),
-                                                            decoration: BoxDecoration(
-                                                                color: Color(
-                                                                    0x32FFFFFF),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            16)),
-                                                            child: Icon(
-                                                              Icons
-                                                                  .bar_chart_outlined,
-                                                              size: 32,
-                                                              color:
-                                                                  Colors.white,
-                                                            ),
-                                                          )
-                                                        ],
-                                                      ),
-                                                      SizedBox(
-                                                        height: 50,
-                                                      ),
-                                                      SizedBox(
-                                                          height: 300,
-                                                          child: BarChart1()),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          ListView.builder(
-                                            itemCount: 9,
-                                            itemBuilder: (context, index) {
-                                              return Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 8.0),
+                                                padding: EdgeInsets.all(16),
                                                 child: Column(
                                                   children: [
-                                                    Container(
-                                                      padding:
-                                                          EdgeInsets.all(32),
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(16),
-                                                        color:
-                                                            Color(0xFFF5F9FF),
-                                                      ),
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text(
-                                                            index % 2 == 0
-                                                                ? "Task"
-                                                                : "Video",
-                                                            style: TextStyle(
-                                                                fontSize: 24,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .teal
-                                                                    .shade900),
-                                                          ),
-                                                          Text(
-                                                            index % 2 == 0
-                                                                ? "+2⭐"
-                                                                : "+4⭐",
-                                                            style: TextStyle(
-                                                                fontSize: 24,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                color: Colors
-                                                                    .teal
-                                                                    .shade900),
-                                                          )
-                                                        ],
-                                                      ),
+                                                    SizedBox(
+                                                      height: 30,
+                                                    ),
+                                                    Text(
+                                                      "You total Stats 🔥👀!",
+                                                      style: TextStyle(
+                                                          fontSize: 24,
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                      textAlign:
+                                                          TextAlign.center,
                                                     ),
                                                     SizedBox(
-                                                      height: 16,
+                                                      height: 22,
+                                                    ),
+                                                    Stack(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      children: [
+                                                        SizedBox(
+                                                          height: 138,
+                                                          width: 138,
+                                                          child:
+                                                              CircularProgressIndicator(
+                                                            strokeWidth: 10,
+                                                            value: 37 / 50,
+                                                            color: Color(
+                                                                0xFF0E104B),
+                                                            backgroundColor:
+                                                                Color(
+                                                                    0xFFFFFFFF),
+                                                            strokeCap:
+                                                                StrokeCap.round,
+                                                          ),
+                                                        ),
+                                                        Positioned(
+                                                          child: Column(
+                                                            children: [
+                                                              Text.rich(TextSpan(
+                                                                  children: [
+                                                                    TextSpan(
+                                                                        text: _tasks
+                                                                            .toString(),
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color:
+                                                                              Color(0xFF0C092A),
+                                                                          fontSize:
+                                                                              32,
+                                                                          fontWeight:
+                                                                              FontWeight.bold,
+                                                                        )),
+                                                                    TextSpan(
+                                                                        text:
+                                                                            "/30",
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color:
+                                                                              Color(0x80181254),
+                                                                          fontSize:
+                                                                              16,
+                                                                          fontWeight:
+                                                                              FontWeight.bold,
+                                                                        )),
+                                                                  ])),
+                                                              Text("Tasks Done",
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: Color(
+                                                                        0x800C092A),
+                                                                    fontSize:
+                                                                        16,
+                                                                  ))
+                                                            ],
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      height: 24,
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Container(
+                                                          width: 157.5,
+                                                          padding:
+                                                              EdgeInsets.all(
+                                                                  16),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: Colors.white,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        16),
+                                                          ),
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .stretch,
+                                                            children: [
+                                                              Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                children: [
+                                                                  Padding(
+                                                                    padding: const EdgeInsets
+                                                                        .only(
+                                                                        top:
+                                                                            12.0),
+                                                                    child: Text(
+                                                                        _quizPlayed
+                                                                            .toString(),
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color:
+                                                                              Color(0xFF0C092A),
+                                                                          fontSize:
+                                                                              32,
+                                                                          fontWeight:
+                                                                              FontWeight.bold,
+                                                                        )),
+                                                                  ),
+                                                                  Padding(
+                                                                    padding: const EdgeInsets
+                                                                        .only(
+                                                                        bottom:
+                                                                            10.0),
+                                                                    child: Icon(
+                                                                        Icons
+                                                                            .edit_outlined),
+                                                                  )
+                                                                ],
+                                                              ),
+                                                              Text("Quiz Done",
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: Color(
+                                                                        0xFF0C092A),
+                                                                    fontSize:
+                                                                        16,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                  ))
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                          width: 157.5,
+                                                          padding:
+                                                              EdgeInsets.all(
+                                                                  16),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: Color(
+                                                                0xFF0E104B),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        16),
+                                                          ),
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .stretch,
+                                                            children: [
+                                                              Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                children: [
+                                                                  Padding(
+                                                                    padding: EdgeInsets
+                                                                        .only(
+                                                                            top:
+                                                                                12.0),
+                                                                    child: Text(
+                                                                        _videoWatched
+                                                                            .toString(),
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color:
+                                                                              Colors.white,
+                                                                          fontSize:
+                                                                              32,
+                                                                          fontWeight:
+                                                                              FontWeight.bold,
+                                                                        )),
+                                                                  ),
+                                                                  Padding(
+                                                                    padding: const EdgeInsets
+                                                                        .only(
+                                                                        bottom:
+                                                                            10.0),
+                                                                    child: Icon(
+                                                                      Icons
+                                                                          .military_tech_outlined,
+                                                                      color: Colors
+                                                                          .white,
+                                                                    ),
+                                                                  )
+                                                                ],
+                                                              ),
+                                                              Text(
+                                                                  "Video Watched",
+                                                                  style:
+                                                                      TextStyle(
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontSize:
+                                                                        16,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                  ))
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
                                                     )
                                                   ],
                                                 ),
-                                              );
-                                            },
+                                              ),
+                                              SizedBox(
+                                                height: 24,
+                                              ),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                    color: Color(0xFF2BB6E0),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            16)),
+                                                padding: EdgeInsets.all(16),
+                                                child: Column(
+                                                  children: [
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          "Top contribution to\nachieving SDGs",
+                                                          style: TextStyle(
+                                                              fontSize: 21,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color:
+                                                                  Colors.white),
+                                                        ),
+                                                        Container(
+                                                          padding:
+                                                              EdgeInsets.all(8),
+                                                          decoration: BoxDecoration(
+                                                              color: Color(
+                                                                  0x32FFFFFF),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          16)),
+                                                          child: Icon(
+                                                            Icons
+                                                                .bar_chart_outlined,
+                                                            size: 32,
+                                                            color: Colors.white,
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      height: 50,
+                                                    ),
+                                                    SizedBox(
+                                                        height: 300,
+                                                        child: BarChart1(
+                                                          quizPlayed:
+                                                              _quizPlayed,
+                                                          tasks: _tasks,
+                                                          videoWatched:
+                                                              _videoWatched,
+                                                        )),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(50),
+                                            ),
+                                            child: TasksListView(),
                                           )
                                         ],
                                       ),
@@ -790,14 +711,9 @@ class _StatisticsPageState extends State<StatisticsPage> {
                     left: (MediaQuery.of(context).size.width / 2) - 48,
                     child: CircleAvatar(
                       radius: 48,
-                      backgroundColor: Colors.purple,
+                      backgroundColor: Color.fromARGB(255, 17, 29, 90),
                       child: Image.asset("assets/images/user.png"),
                     )),
-                Positioned(
-                  top: 72,
-                  left: (MediaQuery.of(context).size.width / 2) + 24,
-                  child: SvgPicture.asset("assets/images/Country.svg"),
-                ),
               ],
             ),
           ),
@@ -855,11 +771,43 @@ class _SvglockState extends State<Svglock> {
 }
 
 // ignore: must_be_immutable
-class BarChart1 extends StatelessWidget {
-  BarChart1({super.key});
+class BarChart1 extends StatefulWidget {
+  const BarChart1(
+      {super.key,
+      required this.quizPlayed,
+      required this.tasks,
+      required this.videoWatched});
+  final int quizPlayed;
+  final int tasks;
+  final int videoWatched;
 
+  @override
+  State<BarChart1> createState() => _BarChart1State();
+}
+
+class _BarChart1State extends State<BarChart1> {
   dynamic vals = ["3/10", "8/10", "6/10"];
   dynamic values = [3 / 10, 8 / 10, 6 / 10];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
+
+  void getData() {
+    dynamic vals = [
+      "${widget.tasks}/20",
+      "${widget.videoWatched}/10",
+      "${widget.quizPlayed}/10"
+    ];
+    dynamic values = [
+      widget.tasks / 20,
+      widget.videoWatched / 50,
+      widget.quizPlayed / 10
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     return BarChart(

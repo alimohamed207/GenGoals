@@ -5,8 +5,11 @@ import 'package:flutter_samples/helper/user_data_help.dart';
 import 'package:flutter_samples/pages/main_page.dart';
 
 class SummaryPage extends StatefulWidget {
-  const SummaryPage({super.key, required this.mainColor});
   final Color mainColor;
+  final String sumImage;
+  const SummaryPage(
+      {super.key, required this.mainColor, required this.sumImage});
+
   @override
   State<SummaryPage> createState() => _SummaryPageState();
 }
@@ -79,7 +82,7 @@ class _SummaryPageState extends State<SummaryPage> {
                 ),
               ),
               Image.asset(
-                "assets/images/Biology-Grade-12-samp-51.png",
+                widget.sumImage,
                 height: 520,
               ),
             ],

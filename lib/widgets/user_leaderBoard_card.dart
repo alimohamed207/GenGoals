@@ -41,7 +41,7 @@ class _UserLeaderboardCardsState extends State<UserLeaderboardCards> {
       itemCount: leaderboard.length,
       itemBuilder: (context, index) {
         final user = leaderboard[index];
-        final rank = calculateRank(user, leaderboard);
+        calculateRank(user, leaderboard);
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

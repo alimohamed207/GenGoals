@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_samples/components/colors.dart';
+import 'package:flutter_samples/helper/open_url.dart';
 import 'package:flutter_samples/helper/user_data_help.dart';
 import 'package:flutter_samples/widgets/video_player.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -26,7 +27,7 @@ class VideoCard extends StatefulWidget {
 
 class _VideoCardState extends State<VideoCard> {
   int _points = 0;
-
+  int _videoWatched = 0;
   @override
   void initState() {
     super.initState();
@@ -50,6 +51,7 @@ class _VideoCardState extends State<VideoCard> {
       if (mounted) {
         setState(() {
           _points = userData['points'];
+          _videoWatched = userData['videosWathsed'];
         });
       }
     }
@@ -125,16 +127,24 @@ class _VideoCardState extends State<VideoCard> {
                       onPressed: () {
                         updatePoints(FirebaseAuth.instance.currentUser!.uid,
                             _points + 10);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CustomVideoPlayer(
-                              title: widget.title,
-                              description: widget.info,
-                              videoUrl: widget.link,
-                            ),
-                          ),
+                        updateStatistics(
+                          userId: FirebaseAuth.instance.currentUser!.uid,
+                          changedData: 'videosWathsed',
+                          newValue: _videoWatched + 1,
                         );
+                        if (widget.link.contains('spotify')) {
+                          openBrowserWebView(widget.link);
+                        } else {
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) {
+                              return CustomVideoPlayer(
+                                title: widget.title,
+                                description: widget.info,
+                                videoUrl: widget.link,
+                              );
+                            },
+                          ));
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.accentColor,
