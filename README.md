@@ -22,24 +22,6 @@ Sure, here's a README file for your application "Gen Goals":
 - **Server-Side Logic**: Developed the backend logic for features like user authentication, point calculation, leaderboard updates, and chat functionality.
 - **Integration with Third-Party Services**: Integrated with external services (if applicable) for features like video streaming, article fetching, or AI-powered chat.
 
-## Installation
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-repo/gen-goals.git
-   ```
-2. Navigate to the project directory:
-   ```bash
-   cd gen-goals
-   ```
-3. Install dependencies:
-   ```bash
-   flutter pub get
-   ```
-4. Run the application:
-   ```bash
-   flutter run
-   ```
-
 ## Usage
 1. Open the app on your device.
 2. Sign up or log in to your account.
@@ -47,31 +29,16 @@ Sure, here's a README file for your application "Gen Goals":
 4. Earn points and badges by completing lessons and activities.
 5. Check the leaderboard to see your ranking among other students.
 
-## Contributing
-We welcome contributions from the community. To contribute:
-1. Fork the repository.
-2. Create a new branch:
-   ```bash
-   git checkout -b feature-branch
-   ```
-3. Make your changes and commit them:
-   ```bash
-   git commit -m "Add new feature"
-   ```
-4. Push to the branch:
-   ```bash
-   git push origin feature-branch
-   ```
-5. Open a pull request.
-
-## License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
 ## Contact
 For any questions or feedback, please contact:
-- **Ali Mohamed Eid**: Software Engineer
-- Email: ali.mohamed.eid@example.com
-
+- **Greenovate Team**: Team At Nasa Space Apps Cairo
+- - **Lily Yasser Sayed**: Team Leader - UI/UX
+- **Ali Mohamed Eid**: Software Engineer - Flutter Development 
+- Email: aliskytop2007@gmail.com
+- **Felo**: Data - Game Development 
+- **Yousif Ahmed**: Researcher
+- **Khalid Osam**: Video Editing 
+- **Eslam Emam**: Software Engineer
 ---
 
 Feel free to customize this README file further to suit your project's needs!
