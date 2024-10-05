@@ -22,6 +22,11 @@ Sure, here's a README file for your application "Gen Goals":
 - **Server-Side Logic**: Developed the backend logic for features like user authentication, point calculation, leaderboard updates, and chat functionality.
 - **Integration with Third-Party Services**: Integrated with external services (if applicable) for features like video streaming, article fetching, or AI-powered chat.
 
+### Game Development "Important"
+- I propose that the game feature be developed in a separate repository, [https://github.com/felorobier/Gen_Goal/tree/master].
+- **Given the deadline, I recommend prioritizing the core functionality of the main application and developing the game feature in a separate phase.**: This will allow us to meet the project's timeline while ensuring the quality of both the main application and the game feature.
+- To integrate the game feature with the main application, we will need to establish clear physical communication between team members.
+  
 ## Usage
 1. Open the app on your device.
 2. Sign up or log in to your account.
